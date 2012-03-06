@@ -1,4 +1,5 @@
 import pygame, random, math
+from sets import Set
 
 class MapGenerator:
     
@@ -18,32 +19,41 @@ class MapGenerator:
     def createGraph(self):
         #neighborhood map
         self.graph = [[] for j in range(0, self.labyrinth_size ** 2)]
-        
+        self.edgesset = set([])
         #every node has 4 neighbours except for the borders
         for p in range(0, self.labyrinth_size ** 2):
             if p - self.labyrinth_size >= 0:
                 self.graph[p].append(p - self.labyrinth_size)
+                self.edgesset.add((p, p - self.labyrinth_size))
             if p + self.labyrinth_size < self.labyrinth_size ** 2:
                 self.graph[p].append(p + self.labyrinth_size)
+                self.edgesset.add((p, p + self.labyrinth_size))
             if p % self.labyrinth_size > 0:
                 self.graph[p].append(p - 1)
+                self.edgesset.add((p, p - 1))
             if p % self.labyrinth_size  < self.labyrinth_size - 1:
                 self.graph[p].append(p + 1)
+                self.edgesset.add((p, p + 1))
     
+    def KruskalsSpanningTree(self):
+        pass
+            
+
     def PrimsRandomSpanningTree(self):
         self.edges = []
-        node_list = [0]
+        node_list = set([0])
+        
 
         while len(node_list) < self.labyrinth_size ** 2:
             neighbours = []
             for x in node_list:
                 for y in self.graph[x]:
-                    if node_list.count(y) == 0:
+                    if y not in node_list:
                         neighbours.append((x, y))
 
             edge = neighbours[random.randint(0, len(neighbours) - 1)]
             self.edges.append(edge)
-            node_list.append(edge[1])
+            node_list.add(edge[1])
              
     def generateLabyrinthFromSpanningTree(self):
         self.blocks_count = 2 * self.labyrinth_size + 1
