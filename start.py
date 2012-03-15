@@ -86,8 +86,8 @@ class MainWidget(QWidget):
         f.write("\n")
         for i in range(0, len(self.map)):
             for j in range(0, len(self.map[i])):
-#                if j > 0:
-#                    f.write(",")
+                if j > 0:
+                    f.write(" ")
                 f.write(str(self.map[i][j]))
             f.write("\n")
 

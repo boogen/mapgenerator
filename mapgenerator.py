@@ -1,4 +1,4 @@
-import pygame, random, math
+import random, math
 from sets import Set
 
 class MapGenerator:
@@ -9,7 +9,6 @@ class MapGenerator:
     def __init__(self, size):
         self.block_width = 32
         self.labyrinth_size = size        
-        self.screen = pygame.display.get_surface()
         self.createGraph()
         self.PrimsRandomSpanningTree()
         self.generateLabyrinthFromSpanningTree()
